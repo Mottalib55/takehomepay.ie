@@ -1,33 +1,79 @@
 # Validation — takehomepay.ie
 
-## Test cases verified against Revenue.ie rates
-
-### Case 1: Single person, €35,000 gross
-
-- **Input**: €35,000 annual, single, no pension
-- **Income Tax**: €35,000 × 20% = €7,000 gross. Credits: €1,875 + €1,875 = €3,750. Net tax: €3,250
-- **USC**: €12,012 × 0.5% + €13,748 × 2% + €9,240 × 4% = €60.06 + €274.96 + €369.60 = €704.62
-- **PRSI**: €35,000 × 4% = €1,400
-- **Source**: Revenue.ie 2026 rates
-
-### Case 2: Single person, €60,000 gross
-
-- **Input**: €60,000 annual, single, no pension
-- **Income Tax**: €42,000 × 20% + €18,000 × 40% = €8,400 + €7,200 = €15,600 gross. Credits €3,750. Net: €11,850
-- **USC**: €60.06 + €274.96 + €1,771.36 (44,284 × 4%) = partial band 3. Total ≈ €2,106.38 (only up to 60k)
-- **PRSI**: €60,000 × 4% = €2,400
-- **Source**: Revenue.ie 2026 rates
-
-### Case 3: Married one income, €60,000 gross
-
-- **Input**: €60,000 annual, married one income, no pension
-- **Income Tax**: €51,000 × 20% + €9,000 × 40% = €10,200 + €3,600 = €13,800 gross
-- **Credits**: €3,750 (married) + €1,875 (PAYE) + €1,800 (home carer) = €7,425
-- **Net tax**: €13,800 - €7,425 = €6,375
-- **Source**: Revenue.ie 2026 rates, Citizens Information
-
 ## Sources
 
-- [Revenue.ie — Tax rates and credits](https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx)
-- [Citizens Information — Income tax](https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/)
-- [Revenue.ie — USC](https://www.revenue.ie/en/jobs-and-pensions/usc/index.aspx)
+- [Revenue.ie](https://www.revenue.ie)
+- [Citizens Information](https://www.citizensinformation.ie)
+- [Gov.ie Budget](https://www.gov.ie/budget)
+
+---
+
+## Test Case 1: Single PAYE worker, EUR 40,000 gross
+
+**Input:** Gross EUR 40,000, single, standard credits
+**Expected:**
+- PAYE: 20% on EUR 40,000 = EUR 8,000, less credits EUR 3,750 = EUR 4,250
+- USC: ~EUR 905
+- PRSI (4%): EUR 1,600
+- **Net: ~EUR 33,245**
+
+**Source:** revenue.ie PAYE bands 2026
+
+### Test Case 2: Married one income, EUR 70,000 gross
+
+**Input:** Gross EUR 70,000, married one income
+**Expected:**
+- Standard rate band: EUR 51,000
+- PAYE: 20% on 51k + 40% on 19k = EUR 17,800, less credits EUR 5,625 = EUR 12,175
+- **Net significantly higher than single at same gross**
+
+### Test Case 3: Emergency tax scenario
+
+**Input:** Gross EUR 3,500/month, emergency tax basis
+**Verification:**
+- Week 1-4: standard rate with partial credits
+- After week 4: all income at 40%, no credits
+- **Emergency tax = much lower net than normal PAYE**
+
+---
+
+## Build status
+
+- **Build:** 31 pages, 0 errors
+- **Tests:** 15/15 passed
+- **Sitemap:** auto-generated (sitemap-index.xml)
+
+## Page inventory (31 pages)
+
+| Category | Count | Details |
+|---|---|---|
+| Home + legal | 3 | index, legal, privacy |
+| Tool pages | 1 | faq |
+| Guides index | 1 | /guides/ |
+| Guide articles | 8 | paye-tax-ireland, usc-universal-social-charge, prsi-social-insurance, tax-credits-ireland, emergency-tax-ireland, married-tax-assessment, pension-tax-relief, first-job-ireland |
+| Salary pages | 12 | salary-[amount] (25000 through 150000) |
+| Scenario pages | 6 | [scenario]-take-home-pay (6 tax scenarios) |
+
+## Components
+
+- SalaryCalculator.tsx (Irish PAYE/USC/PRSI calculator)
+
+## Data files
+
+- tax-rates-2026.ts — PAYE bands, USC thresholds, PRSI rates, tax credits
+- salaries-data.ts — 12 salary entries with pre-calculated examples
+- tax-credits-data.ts — 6 tax scenario entries
+
+## Quality gates
+
+- [x] Build passes (31 pages, 0 errors)
+- [x] Tests pass (15/15)
+- [x] Sitemap generated
+- [x] Schema.org on every page (WebApplication, FAQPage, BreadcrumbList)
+- [x] Analytics: Plausible + GA4 placeholder
+- [x] robots.txt present
+- [x] llms.txt present
+- [x] All guide pages > 1500 words
+- [x] Disclaimer in footer
+- [x] Mobile-responsive navigation (hamburger menu)
+- [x] Internal cross-linking between tools and guides

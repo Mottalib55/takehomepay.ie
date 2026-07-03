@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="Tax Glossary - Irish Payroll Terms Explained | TakeHomePay.ie" description="A comprehensive glossary of Irish payroll and tax terms including PAYE, USC, PRSI, tax credits, and more. Understand your payslip and tax obligations.">
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://takehomepay.ie/" },
+      { "@type": "ListItem", "position": 2, "name": "Glossary", "item": "https://takehomepay.ie/glossary/" }
+    ]
+  })} />
+
+  <div class="max-w-3xl mx-auto">
+    <nav class="text-sm text-gray-500 mb-6">
+      <a href="/" class="hover:text-primary">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-800">Glossary</span>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-4">Irish Tax and Payroll Glossary</h1>
+    <p class="text-gray-600 mb-8">A guide to the key terms you will encounter on your Irish payslip, tax return, and when using our salary calculator. Terms are listed in alphabetical order.</p>
+
+    <dl class="space-y-6">
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">BIK (Benefit in Kind)</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">A Benefit in Kind is any non-cash benefit provided by your employer that has a monetary value, such as a company car, health insurance, or accommodation. BIK is treated as taxable income, meaning PAYE, USC, and PRSI are calculated on its value. The specific rules for valuing each type of benefit are set by Revenue.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Emergency Tax</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">Emergency tax is applied when your employer does not have your tax credits or Standard Rate Cut-Off Point on file, typically at the start of a new job. Under emergency tax, you receive basic tax credits for the first four weeks, after which all income is taxed at the higher rate with no credits. You can resolve this by registering your new job with Revenue through myAccount or the Revenue Online Service (ROS).</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Gross Pay</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">Gross pay is your total earnings before any deductions are applied. It includes your basic salary, overtime payments, bonuses, commissions, and any other taxable income. This is the starting figure from which PAYE, USC, PRSI, and other deductions are calculated.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Marriage/Civil Partnership Relief</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">Married couples and civil partners in Ireland can choose between separate assessment, joint assessment, or assessment as a single person for tax purposes. Joint assessment typically provides the greatest benefit, as it allows unused tax credits and rate bands to be transferred between spouses. The specific tax credits and rate band available depend on the assessment option chosen.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Medical Insurance Relief</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">Tax relief is available on medical insurance premiums paid in Ireland. The relief is applied at source, meaning the insurance company reduces your premium by the value of the tax relief (currently at the standard rate of 20%). This relief applies to the gross premium, though a maximum limit applies per adult and per child covered under the policy.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Net Pay</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">Net pay, also known as take-home pay, is the amount you actually receive after all deductions have been subtracted from your gross pay. These deductions include PAYE income tax, Universal Social Charge, PRSI, and any voluntary deductions such as pension contributions or union fees. Net pay is the figure deposited into your bank account.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">P45</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">A P45 is a certificate issued by your employer when you leave a job. It details your total pay, tax, USC, and PRSI deducted during your employment for that tax year. While the P45 process has been largely replaced by Revenue's real-time PAYE system, the concept remains relevant for understanding your cumulative tax position when changing jobs.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">P60</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">A P60 is an end-of-year certificate that summarizes your total pay, tax deducted, USC, and PRSI contributions for the entire tax year. Under the modernized PAYE system, this information is now available through Revenue's Employment Detail Summary, which you can access via your myAccount portal online.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">PAYE (Pay As You Earn)</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">PAYE is the system through which income tax is deducted from your wages by your employer on behalf of Revenue. The amount deducted depends on your gross pay, your tax credits, and the applicable tax rates. Ireland uses a two-rate system: income up to the Standard Rate Cut-Off Point is taxed at 20%, and income above that threshold is taxed at 40%.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">PRSI (Pay Related Social Insurance)</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">PRSI is a social insurance contribution that funds state benefits such as the State Pension, Jobseeker's Benefit, and Illness Benefit. Most employees pay Class A PRSI at 4% of their gross income. Employers also make a PRSI contribution on your behalf. The rate and class of PRSI depend on your employment type and earnings level.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Revenue</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">Revenue, formally known as the Revenue Commissioners, is the Irish government body responsible for collecting taxes, duties, and related charges. Revenue administers the PAYE system, issues tax credits and certificates, and manages taxpayer records. Employees interact with Revenue through the myAccount online portal to manage their tax affairs.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Standard Rate Cut-Off Point</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">The Standard Rate Cut-Off Point (SRCOP) is the amount of income you can earn at the standard tax rate of 20% before the higher rate of 40% applies. The SRCOP varies depending on your personal circumstances, such as whether you are single, married with one income, or married with two incomes. Revenue sets the SRCOP each year in the national budget.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Tax Code</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">In the Irish tax system, your tax position is determined by your Revenue Payroll Notification (RPN), which communicates your tax credits, standard rate cut-off point, and USC rates to your employer. This ensures the correct amount of tax is deducted from each pay period. If your RPN is not available, your employer may apply emergency tax rates.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">Tax Credits</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">Tax credits are amounts that reduce the total income tax you owe. Unlike tax deductions, which reduce your taxable income, credits are subtracted directly from your calculated tax liability. Common Irish tax credits include the Personal Tax Credit, Employee Tax Credit (PAYE Credit), and Home Carer Tax Credit. Revenue assigns your applicable credits through your RPN.</dd>
+      </div>
+
+      <div>
+        <dt class="text-lg font-semibold text-gray-900">USC (Universal Social Charge)</dt>
+        <dd class="text-gray-700 mt-1 leading-relaxed">The Universal Social Charge is a tax on gross income that is separate from PAYE income tax. USC uses a progressive rate structure with multiple bands - lower rates apply to initial portions of income, with higher rates applying as income increases. Certain individuals, such as those earning below a specific threshold, medical card holders, or people over 70 with income below a set limit, may qualify for reduced USC rates.</dd>
+      </div>
+    </dl>
+  </div>
+</Layout>

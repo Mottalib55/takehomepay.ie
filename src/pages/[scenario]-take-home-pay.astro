@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SalaryCalculator from '../components/SalaryCalculator';
+import { taxScenarios, type TaxScenarioEntry } from '../lib/tax-credits-data';
+import { salaries } from '../lib/salaries-data';
+
+export function getStaticPaths() {
+  return taxScenarios.map((s) => ({
+    params: { scenario: s.slug },
+    props: { scenario: s },
+  }));
+}
+
+interface Props {
+  scenario: TaxScenarioEntry;
+}
+
+const { scenario } = Astro.props;
+
+const siteUrl = 'https://takehomepay.ie';
+const pageUrl = `${siteUrl}/${scenario.slug}-take-home-pay/`;
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+    { "@type": "ListItem", "position": 2, "name": `${scenario.label} Take Home Pay`, "item": pageUrl },
+  ],
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": scenario.faqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": { "@type": "Answer", "text": faq.answer },
+  })),
+};
+
+const otherScenarios = taxScenarios.filter((s) => s.slug !== scenario.slug);
+---
+
+<Layout
+  title={`${scenario.label} Take Home Pay Ireland 2026`}
+  description={`Calculate take-home pay in Ireland as a ${scenario.label.toLowerCase()} for 2026. Learn about tax credits, deductions, USC, PRSI, and net salary for this filing status.`}
+  canonical={pageUrl}
+>
+  <div class="space-y-10">
+
+    {/* Breadcrumb */}
+    <nav aria-label="Breadcrumb" class="text-sm text-gray-500">
+      <ol class="flex items-center gap-1.5 flex-wrap">
+        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+        <li class="before:content-['/'] before:mx-1.5 before:text-gray-300">{scenario.label} Take Home Pay</li>
+      </ol>
+    </nav>
+
+    {/* Heading */}
+    <div class="text-center max-w-3xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        {scenario.label} - Take Home Pay Ireland 2026
+      </h1>
+      <p class="text-lg text-gray-600 leading-relaxed">
+        Everything you need to know about tax credits, deductions, and net salary
+        as a {scenario.label.toLowerCase()} in Ireland. Use our calculator below to see your
+        exact take-home pay.
+      </p>
+    </div>
+
+    {/* Key Credits Cards */}
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {scenario.keyCredits.map((credit) => (
+        <div class="bg-white rounded-xl shadow-sm border border-border p-6">
+          <p class="text-xs text-gray-500 mb-1 uppercase tracking-wide">{credit.name}</p>
+          <p class="text-2xl font-bold text-primary">{credit.amount}</p>
+          <p class="text-sm text-gray-500 mt-2">{credit.note}</p>
+        </div>
+      ))}
+    </div>
+
+    {/* Description / Prose */}
+    <div class="prose prose-slate max-w-none">
+      <h2>Tax Credits and Deductions for a {scenario.label}</h2>
+      <p>{scenario.description}</p>
+    </div>
+
+    {/* Calculator */}
+    <div>
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Calculate Your Take-Home Pay</h2>
+      <p class="text-gray-600 mb-6">
+        Enter your gross salary and adjust the settings to match your {scenario.label.toLowerCase()} status.
+        The calculator shows your net pay after income tax, USC, and PRSI.
+      </p>
+      <SalaryCalculator client:idle />
+    </div>
+
+    {/* FAQ Section */}
+    <div class="prose prose-slate max-w-none">
+      <h2>Frequently Asked Questions - {scenario.label}</h2>
+      {scenario.faqs.map((faq) => (
+        <details>
+          <summary><strong>{faq.question}</strong></summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+
+    {/* Cross-links: Other Scenarios */}
+    <div class="bg-white rounded-xl shadow-sm border border-border p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Other Tax Scenarios</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {otherScenarios.map((s) => (
+          <a
+            href={`/${s.slug}-take-home-pay/`}
+            class="block rounded-lg border border-border px-4 py-3 text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors"
+          >
+            {s.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    {/* Cross-links: Salary Pages */}
+    <div class="bg-white rounded-xl shadow-sm border border-border p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Salary Calculators</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        {salaries.map((s) => (
+          <a
+            href={`/salary-${s.slug}/`}
+            class="block rounded-lg border border-border px-4 py-3 text-center text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors"
+          >
+            {s.grossFormatted} Salary
+          </a>
+        ))}
+      </div>
+    </div>
+
+    {/* Disclaimer */}
+    <div class="text-xs text-gray-400 leading-relaxed border-t border-gray-200 pt-6">
+      <p>
+        <strong>Disclaimer:</strong> This page provides general information about Irish tax credits and deductions
+        for the {scenario.label.toLowerCase()} filing status based on 2026 rates. Individual circumstances vary,
+        and actual tax liability depends on specific factors not covered here. This is not professional tax advice.
+        Consult <a href="https://www.revenue.ie" target="_blank" rel="noopener noreferrer" class="underline">Revenue.ie</a>
+        or a qualified tax adviser for personalised guidance.
+      </p>
+    </div>
+
+    {/* Schema.org JSON-LD */}
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </div>
+</Layout>

@@ -20,6 +20,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
     <link rel="canonical" href={pageUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="robots" content="index, follow" />
+    <meta name="author" content="Mottalib Radif" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -36,12 +37,46 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
       "description": description,
     })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Take Home Pay Ireland",
+      "url": "https://takehomepay.ie",
+      "logo": "https://takehomepay.ie/favicon.svg",
+      "founder": {
+        "@type": "Person",
+        "name": "Mottalib Radif"
+      }
+    })} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mottalib Radif",
+      "jobTitle": "Personal Finance & Taxation Expert",
+      "description": "MBA INSEAD graduate, passionate about Irish personal finance. Specialised in PAYE, USC, and PRSI analysis.",
+      "alumniOf": { "@type": "EducationalOrganization", "name": "INSEAD" },
+      "image": "https://takehomepay.ie/team/mottalib-radif.jpg",
+      "url": "https://takehomepay.ie/about/"
+    })} />
+
     <script defer data-domain="takehomepay.ie" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Google Analytics 4 — replace G-XXXXXXXXXX with real ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+
     <style>
       @import '../styles/global.css';
     </style>
   </head>
   <body class="min-h-screen bg-surface text-gray-900 font-sans">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-blue-700 focus:rounded-lg focus:shadow-lg focus:ring-2 focus:ring-blue-500">Skip to content</a>
     <header class="bg-white border-b border-border">
       <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
         <a href="/" class="flex items-center gap-2 text-primary font-bold text-xl hover:text-primary-dark transition-colors">
@@ -50,13 +85,44 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
           </svg>
           takehomepay.ie
         </a>
+
+        <!-- Desktop navigation -->
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a href="/" class="text-gray-600 hover:text-primary transition-colors">Calculator</a>
+          <a href="/guides/" class="text-gray-600 hover:text-primary transition-colors">Guides</a>
           <a href="/faq/" class="text-gray-600 hover:text-primary transition-colors">FAQ</a>
         </nav>
+
+        <!-- Mobile hamburger button -->
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="hamburger-line block w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center"></span>
+          <span class="hamburger-line block w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center"></span>
+          <span class="hamburger-line block w-6 h-0.5 bg-gray-700 rounded transition-all duration-300 origin-center"></span>
+        </button>
       </div>
+
+      <!-- Mobile navigation panel -->
+      <nav
+        id="mobile-menu"
+        class="md:hidden hidden border-t border-border bg-white"
+      >
+        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col gap-3 text-sm">
+          <a href="/" class="text-gray-600 hover:text-primary transition-colors py-1">Calculator</a>
+          <a href="/guides/" class="text-gray-600 hover:text-primary transition-colors py-1">Guides</a>
+          <a href="/faq/" class="text-gray-600 hover:text-primary transition-colors py-1">FAQ</a>
+          <a href="/legal/" class="text-gray-600 hover:text-primary transition-colors py-1">Legal Notice</a>
+          <a href="/privacy/" class="text-gray-600 hover:text-primary transition-colors py-1">Privacy Policy</a>
+        </div>
+      </nav>
     </header>
-    <main class="max-w-5xl mx-auto px-4 py-8">
+    <main id="main-content" class="max-w-5xl mx-auto px-4 py-8">
       <slot />
     </main>
     <footer class="bg-white border-t border-border mt-12">
@@ -66,6 +132,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
             <h3 class="font-semibold text-gray-900 mb-3">Tools</h3>
             <ul class="space-y-2">
               <li><a href="/" class="hover:text-primary">Salary Calculator</a></li>
+              <li><a href="/guides/" class="hover:text-primary">Guides</a></li>
               <li><a href="/faq/" class="hover:text-primary">FAQ</a></li>
             </ul>
           </div>
@@ -90,5 +157,33 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
         </div>
       </div>
     </footer>
+
+    <!-- Mobile menu toggle script -->
+    <script is:inline>
+      (function() {
+        var btn = document.getElementById('mobile-menu-btn');
+        var menu = document.getElementById('mobile-menu');
+        if (!btn || !menu) return;
+
+        btn.addEventListener('click', function() {
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+          menu.classList.toggle('hidden');
+
+          var lines = btn.querySelectorAll('.hamburger-line');
+          if (!expanded) {
+            // Transform to X
+            lines[0].style.transform = 'translateY(4px) rotate(45deg)';
+            lines[1].style.opacity = '0';
+            lines[2].style.transform = 'translateY(-4px) rotate(-45deg)';
+          } else {
+            // Revert to hamburger
+            lines[0].style.transform = '';
+            lines[1].style.opacity = '1';
+            lines[2].style.transform = '';
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

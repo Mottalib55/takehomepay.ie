@@ -1,0 +1,112 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const guides = [
+  {
+    slug: 'paye-tax-ireland',
+    title: 'PAYE Tax in Ireland',
+    description: 'How PAYE works, the 2026 rates and bands, standard rate cut-off points, and how tax credits reduce your bill.',
+    icon: '&#x1F4B6;',
+  },
+  {
+    slug: 'usc-universal-social-charge',
+    title: 'USC (Universal Social Charge)',
+    description: 'USC rates, thresholds, exemptions, and how this charge differs from income tax for Irish workers.',
+    icon: '&#x1F4CA;',
+  },
+  {
+    slug: 'prsi-social-insurance',
+    title: 'PRSI in Ireland',
+    description: 'PRSI classes, contribution rates, the benefits you earn, and how the tapered credit works for low earners.',
+    icon: '&#x1F3E5;',
+  },
+  {
+    slug: 'tax-credits-ireland',
+    title: 'Tax Credits in Ireland 2026',
+    description: 'A complete guide to Personal, Employee, Single Parent, Home Carer, Rent, and other tax credits available.',
+    icon: '&#x2705;',
+  },
+  {
+    slug: 'emergency-tax-ireland',
+    title: 'Emergency Tax in Ireland',
+    description: 'Why emergency tax happens, how much extra you pay, and step-by-step instructions to claim a refund.',
+    icon: '&#x26A0;',
+  },
+  {
+    slug: 'married-tax-assessment',
+    title: 'Married Couples Tax',
+    description: 'Single vs joint assessment, transferring tax bands, and how to optimise your tax as a married couple.',
+    icon: '&#x1F46B;',
+  },
+  {
+    slug: 'pension-tax-relief',
+    title: 'Pension Contributions & Tax Relief',
+    description: 'How pension contributions reduce your tax, age-related limits, and the difference between 20% and 40% relief.',
+    icon: '&#x1F4B0;',
+  },
+  {
+    slug: 'first-job-ireland',
+    title: 'Starting Your First Job in Ireland',
+    description: 'Tax registration with Revenue, getting your PPS number, understanding your first payslip, and avoiding emergency tax.',
+    icon: '&#x1F393;',
+  },
+];
+---
+
+<Layout
+  title="Tax Guides - Irish Income Tax, USC, PRSI Explained (2026)"
+  description="In-depth guides to PAYE income tax, USC, PRSI, tax credits, pension relief, emergency tax, married assessment, and starting your first job in Ireland."
+>
+  <nav aria-label="Breadcrumb" class="text-sm text-gray-500 mb-6">
+    <ol class="flex items-center gap-1">
+      <li><a href="/" class="hover:text-primary">Home</a></li>
+      <li class="before:content-['/'] before:mx-1">Guides</li>
+    </ol>
+  </nav>
+
+  <div class="text-center max-w-3xl mx-auto mb-10">
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+      Irish Tax &amp; Salary Guides
+    </h1>
+    <p class="text-lg text-gray-600 leading-relaxed">
+      Plain-English guides to every deduction on your Irish payslip. Written for the 2026 tax year using the latest Revenue rates and thresholds.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 mb-12">
+    {guides.map((guide) => (
+      <a
+        href={`/guides/${guide.slug}/`}
+        class="group block bg-white rounded-xl border border-border p-6 hover:border-primary hover:shadow-md transition-all duration-200"
+      >
+        <div class="text-3xl mb-3" set:html={guide.icon} />
+        <h2 class="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors mb-2">
+          {guide.title}
+        </h2>
+        <p class="text-sm text-gray-600 mb-4 leading-relaxed">{guide.description}</p>
+        <span class="text-sm font-medium text-primary group-hover:underline">
+          Read guide &rarr;
+        </span>
+      </a>
+    ))}
+  </div>
+
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://takehomepay.ie/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Guides",
+        "item": "https://takehomepay.ie/guides/"
+      }
+    ]
+  })} />
+</Layout>

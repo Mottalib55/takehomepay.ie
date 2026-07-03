@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SalaryCalculator from '../components/SalaryCalculator';
+import { salaries, type SalaryEntry } from '../lib/salaries-data';
+import { calculateSalary, type SalaryResult } from '../lib/engine';
+import type { FilingStatus } from '../lib/tax-rates-2026';
+
+export function getStaticPaths() {
+  return salaries.map((s) => ({
+    params: { amount: s.slug },
+    props: { salary: s },
+  }));
+}
+
+interface Props {
+  salary: SalaryEntry;
+}
+
+const { salary } = Astro.props;
+
+const fmt = (n: number) =>
+  new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
+
+const fmtWhole = (n: number) =>
+  new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+
+const pct = (n: number) => (n * 100).toFixed(1) + '%';
+
+// Compute results for different filing statuses
+const scenarios: { label: string; status: FilingStatus; result: SalaryResult }[] = [
+  { label: 'Single', status: 'single', result: calculateSalary({ grossAnnual: salary.gross, filingStatus: 'single', pensionRate: 0, additionalCredits: 0 }) },
+  { label: 'Married (one income)', status: 'married_one_income', result: calculateSalary({ grossAnnual: salary.gross, filingStatus: 'married_one_income', pensionRate: 0, additionalCredits: 0 }) },
+  { label: 'Married (two incomes)', status: 'married_two_incomes', result: calculateSalary({ grossAnnual: salary.gross, filingStatus: 'married_two_incomes', pensionRate: 0, additionalCredits: 0 }) },
+  { label: 'Single Parent', status: 'single_parent', result: calculateSalary({ grossAnnual: salary.gross, filingStatus: 'single_parent', pensionRate: 0, additionalCredits: 0 }) },
+];
+
+const singleResult = scenarios[0].result;
+
+const siteUrl = 'https://takehomepay.ie';
+const pageUrl = `${siteUrl}/salary-${salary.slug}/`;
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+    { "@type": "ListItem", "position": 2, "name": `${salary.grossFormatted} Salary`, "item": pageUrl },
+  ],
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": salary.faqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": { "@type": "Answer", "text": faq.answer },
+  })),
+};
+
+const otherSalaries = salaries.filter((s) => s.slug !== salary.slug);
+---
+
+<Layout
+  title={`${salary.grossFormatted} Salary in Ireland - Take Home Pay Calculator 2026`}
+  description={`Calculate your take-home pay on a ${salary.grossFormatted} salary in Ireland for 2026. See income tax, USC, PRSI deductions and net pay for single, married, and single parent filing statuses.`}
+  canonical={pageUrl}
+>
+  <div class="space-y-10">
+
+    {/* Breadcrumb */}
+    <nav aria-label="Breadcrumb" class="text-sm text-gray-500">
+      <ol class="flex items-center gap-1.5 flex-wrap">
+        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+        <li class="before:content-['/'] before:mx-1.5 before:text-gray-300">{salary.grossFormatted} Salary</li>
+      </ol>
+    </nav>
+
+    {/* Heading */}
+    <div class="text-center max-w-3xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        {salary.grossFormatted} Salary in Ireland - Take Home Pay 2026
+      </h1>
+      <p class="text-lg text-gray-600 leading-relaxed">
+        On a gross salary of {salary.grossFormatted} in Ireland, a single PAYE worker takes home
+        approximately <strong class="text-primary">{fmt(singleResult.netAnnual)}</strong> per year
+        or <strong class="text-primary">{fmt(singleResult.netMonthly)}</strong> per month after
+        income tax, USC, and PRSI deductions.
+      </p>
+    </div>
+
+    {/* Stat Cards */}
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-white rounded-xl shadow-sm border border-border p-6 text-center">
+        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wide">Gross Annual</p>
+        <p class="text-2xl font-bold text-gray-900">{fmtWhole(salary.gross)}</p>
+        <p class="text-sm text-gray-500 mt-1">{fmt(singleResult.grossMonthly)}/month</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-border p-6 text-center">
+        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wide">Total Deductions</p>
+        <p class="text-2xl font-bold text-red-600">{fmtWhole(singleResult.totalDeductions)}</p>
+        <p class="text-sm text-gray-500 mt-1">{pct(singleResult.effectiveTotalRate)} effective rate</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm border border-border p-6 text-center">
+        <p class="text-xs text-gray-500 mb-1 uppercase tracking-wide">Net Take-Home</p>
+        <p class="text-2xl font-bold text-green-600">{fmtWhole(singleResult.netAnnual)}</p>
+        <p class="text-sm text-gray-500 mt-1">{fmt(singleResult.netMonthly)}/month</p>
+      </div>
+    </div>
+
+    {/* Comparison Table */}
+    <div class="bg-white rounded-xl shadow-sm border border-border overflow-hidden">
+      <div class="px-6 py-4 border-b border-border">
+        <h2 class="text-lg font-semibold text-gray-900">
+          {salary.grossFormatted} Salary - Comparison by Filing Status
+        </h2>
+        <p class="text-sm text-gray-500 mt-1">No pension contribution, standard tax credits only.</p>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 text-gray-600">
+            <tr>
+              <th class="text-left px-6 py-3 font-medium">Filing Status</th>
+              <th class="text-right px-6 py-3 font-medium">Income Tax</th>
+              <th class="text-right px-6 py-3 font-medium">USC</th>
+              <th class="text-right px-6 py-3 font-medium">PRSI</th>
+              <th class="text-right px-6 py-3 font-medium">Total Deductions</th>
+              <th class="text-right px-6 py-3 font-medium">Net Annual</th>
+              <th class="text-right px-6 py-3 font-medium">Net Monthly</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            {scenarios.map((s) => (
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-3 font-medium text-gray-900">{s.label}</td>
+                <td class="px-6 py-3 text-right text-red-600">{fmt(s.result.incomeTaxNet)}</td>
+                <td class="px-6 py-3 text-right text-orange-600">{fmt(s.result.usc)}</td>
+                <td class="px-6 py-3 text-right text-blue-600">{fmt(s.result.prsi)}</td>
+                <td class="px-6 py-3 text-right font-medium text-red-600">{fmt(s.result.totalDeductions)}</td>
+                <td class="px-6 py-3 text-right font-semibold text-green-600">{fmt(s.result.netAnnual)}</td>
+                <td class="px-6 py-3 text-right text-green-600">{fmt(s.result.netMonthly)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {/* Description / Prose */}
+    <div class="prose prose-slate max-w-none">
+      <h2>About a {salary.grossFormatted} Salary in Ireland</h2>
+      <p>{salary.description}</p>
+    </div>
+
+    {/* Calculator */}
+    <div>
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Calculate Your Exact Take-Home Pay</h2>
+      <p class="text-gray-600 mb-6">
+        Adjust the salary, filing status, and pension contributions below to see your personalised breakdown.
+      </p>
+      <SalaryCalculator client:idle />
+    </div>
+
+    {/* FAQ Section */}
+    <div class="prose prose-slate max-w-none">
+      <h2>Frequently Asked Questions - {salary.grossFormatted} Salary</h2>
+      {salary.faqs.map((faq) => (
+        <details>
+          <summary><strong>{faq.question}</strong></summary>
+          <p>{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+
+    {/* Cross-links: Other Salary Pages */}
+    <div class="bg-white rounded-xl shadow-sm border border-border p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Explore Other Salary Levels</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        {otherSalaries.map((s) => (
+          <a
+            href={`/salary-${s.slug}/`}
+            class="block rounded-lg border border-border px-4 py-3 text-center text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors"
+          >
+            {s.grossFormatted} Salary
+          </a>
+        ))}
+      </div>
+    </div>
+
+    {/* Cross-links: Guide Pages */}
+    <div class="bg-white rounded-xl shadow-sm border border-border p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Tax Scenario Guides</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        <a href="/single-paye-take-home-pay/" class="block rounded-lg border border-border px-4 py-3 text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors">Single PAYE Worker</a>
+        <a href="/married-one-income-take-home-pay/" class="block rounded-lg border border-border px-4 py-3 text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors">Married (One Income)</a>
+        <a href="/married-two-incomes-take-home-pay/" class="block rounded-lg border border-border px-4 py-3 text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors">Married (Two Incomes)</a>
+        <a href="/single-parent-take-home-pay/" class="block rounded-lg border border-border px-4 py-3 text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors">Single Parent</a>
+        <a href="/pension-contributor-take-home-pay/" class="block rounded-lg border border-border px-4 py-3 text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors">Pension Contributor</a>
+        <a href="/first-job-take-home-pay/" class="block rounded-lg border border-border px-4 py-3 text-sm font-medium text-primary hover:bg-green-50 hover:border-primary transition-colors">First Job in Ireland</a>
+      </div>
+    </div>
+
+    {/* Disclaimer */}
+    <div class="text-xs text-gray-400 leading-relaxed border-t border-gray-200 pt-6">
+      <p>
+        <strong>Disclaimer:</strong> This page provides estimates based on 2026 Irish tax rates, USC bands, and PRSI rates
+        as published by Revenue. Actual take-home pay may vary depending on individual circumstances, additional reliefs,
+        employer pension schemes, and Revenue determinations. This is not professional tax advice. For personalised guidance,
+        consult <a href="https://www.revenue.ie" target="_blank" rel="noopener noreferrer" class="underline">Revenue.ie</a>
+        or a qualified tax adviser.
+      </p>
+    </div>
+
+    {/* Schema.org JSON-LD */}
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </div>
+</Layout>

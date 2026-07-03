@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+<Layout title="About - TakeHomePay.ie Irish Salary Calculator" description="Learn about TakeHomePay.ie, the free Irish salary calculator built by Mottalib Radif. Understand how we calculate PAYE, USC, and PRSI deductions.">
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://takehomepay.ie/" },
+      { "@type": "ListItem", "position": 2, "name": "About", "item": "https://takehomepay.ie/about/" }
+    ]
+  })} />
+
+  <div class="max-w-3xl mx-auto">
+    <nav class="text-sm text-gray-500 mb-6">
+      <a href="/" class="hover:text-primary">Home</a>
+      <span class="mx-2">/</span>
+      <span class="text-gray-800">About</span>
+    </nav>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">About TakeHomePay.ie</h1>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Who Built This Calculator</h2>
+      <div class="flex items-start gap-5 mb-4">
+        <img src="/team/mottalib-radif.jpg" alt="Mottalib Radif" class="h-20 w-20 rounded-full object-cover border-4 border-white shadow-lg flex-shrink-0" width="80" height="80" loading="eager" />
+        <div>
+          <h3 class="text-lg font-bold text-gray-900">Mottalib Radif</h3>
+          <p class="text-sm text-primary font-medium">MBA, INSEAD &middot; Irish Personal Finance Enthusiast</p>
+        </div>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        TakeHomePay.ie was created by <strong>Mottalib Radif</strong>, an MBA graduate from INSEAD, one of the world's leading business schools. Passionate about Irish personal finance, Mottalib combines his expertise in financial technology with a thorough understanding of the Irish tax system — PAYE, USC, PRSI, and tax credits — to build accurate, transparent, and easy-to-use calculators. He is driven by the goal of making complex tax calculations transparent and available to everyone at no cost.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Our Mission</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        The mission of TakeHomePay.ie is to provide Irish employees, contractors, and job seekers with a fast, free, and accurate salary calculator. We believe that understanding your take-home pay should not require an accountant or expensive software. Our goal is to empower workers across Ireland to make informed financial decisions by demystifying PAYE income tax, Universal Social Charge, and PRSI contributions.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">How the Calculator Works</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        Our calculator uses the latest Irish tax rates, bands, and thresholds published by Revenue.ie for the current tax year. When you enter your gross salary, the tool applies the standard rate and higher rate of income tax based on your personal circumstances, including marital status and tax credits. It then calculates your Universal Social Charge (USC) using the progressive USC bands and determines your Pay Related Social Insurance (PRSI) contribution based on your employment class.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        The result is a detailed breakdown showing your gross pay, each deduction, and your final net (take-home) pay. The calculations run entirely in your browser, meaning your salary data is never sent to any server. We update the tax rates at the start of each tax year to reflect changes announced in the national budget.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Data Sources</h2>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        All tax rates, credits, and thresholds used in our calculations are sourced directly from official Irish government publications. Our primary references include Revenue.ie for PAYE and USC rates, the Department of Social Protection for PRSI rates, and Citizens Information for general guidance on tax credits and reliefs. We cross-reference multiple official sources to ensure accuracy.
+      </p>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        While we strive for precision, this calculator is intended for estimation purposes only. Individual circumstances may vary, and we recommend consulting a qualified tax advisor or Revenue for definitive calculations related to your specific tax situation. The calculator does not account for every possible relief, exemption, or special circumstance that may apply.
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-3">Contact</h2>
+      <p class="text-gray-700 leading-relaxed">
+        If you have questions, feedback, or suggestions for improving the calculator, please reach out through our website. We appreciate hearing from users and continuously work to improve the accuracy and usability of our tools.
+      </p>
+    </section>
+  </div>
+</Layout>

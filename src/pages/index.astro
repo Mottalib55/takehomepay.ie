@@ -4,7 +4,7 @@ import SalaryCalculator from '../components/SalaryCalculator';
 ---
 
 <Layout
-  title="Irish Take-Home Pay Calculator 2026 — Income Tax, USC, PRSI"
+  title="Irish Take-Home Pay Calculator 2026 - Income Tax, USC, PRSI"
   description="Calculate your take-home pay in Ireland for 2026. Includes income tax, USC, PRSI, tax credits, pension relief. Updated with the latest Revenue rates and thresholds."
 >
   <div class="space-y-10">
@@ -19,7 +19,7 @@ import SalaryCalculator from '../components/SalaryCalculator';
       </p>
     </div>
 
-    <SalaryCalculator client:load />
+    <SalaryCalculator client:idle />
 
     <div class="prose prose-slate max-w-none">
 
@@ -34,7 +34,7 @@ import SalaryCalculator from '../components/SalaryCalculator';
       <p>
         Our calculator processes all three deductions simultaneously, applying the correct rates
         and thresholds for 2026 as published by Revenue. The calculation runs entirely in your
-        browser — no salary data is transmitted or stored on any server. You can share your results
+        browser - no salary data is transmitted or stored on any server. You can share your results
         by copying the URL, which encodes your inputs in the address bar.
       </p>
 
@@ -52,7 +52,7 @@ import SalaryCalculator from '../components/SalaryCalculator';
         Every PAYE worker receives two main credits: the Personal Tax Credit (€1,875 for a single
         person, €3,750 for a married couple) and the Employee (PAYE) Tax Credit of €1,875. These
         credits are deducted directly from your tax liability, not from your income. If your
-        credits exceed your tax liability, the excess is not refunded — your income tax simply
+        credits exceed your tax liability, the excess is not refunded - your income tax simply
         reduces to zero.
       </p>
       <p>
@@ -73,7 +73,7 @@ import SalaryCalculator from '../components/SalaryCalculator';
       </p>
       <p>
         The USC differs from income tax in several important ways. It cannot be reduced by tax
-        credits — the charge is applied directly to your income with no offsets. It applies to
+        credits - the charge is applied directly to your income with no offsets. It applies to
         all income, not just employment income, and the bands are the same regardless of filing
         status. For high earners, the USC adds a significant layer of taxation: someone earning
         €100,000 pays approximately €4,503 in USC annually, on top of their income tax and PRSI.
@@ -85,7 +85,7 @@ import SalaryCalculator from '../components/SalaryCalculator';
         calculator but can be accounted for using the additional credits input.
       </p>
 
-      <h2>PRSI — Pay Related Social Insurance</h2>
+      <h2>PRSI - Pay Related Social Insurance</h2>
       <p>
         PRSI funds Ireland's social insurance system, which provides benefits including the State
         Pension (Contributory), Jobseeker's Benefit, Illness Benefit, and Maternity Benefit.
@@ -159,7 +159,7 @@ import SalaryCalculator from '../components/SalaryCalculator';
         western European countries, though the structure differs. The 40% higher rate kicks in at a
         relatively low threshold compared to countries like the UK (40% at £50,270) or Germany
         (42% at approximately €62,810). However, Ireland's tax credit system is generous, and the
-        USC — while adding to the burden — is lower than equivalent social charges in France or
+        USC - while adding to the burden - is lower than equivalent social charges in France or
         Belgium.
       </p>
       <p>

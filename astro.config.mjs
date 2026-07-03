@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://takehomepay.ie',
+  trailingSlash: 'always',  site: 'https://takehomepay.ie',
   integrations: [react(), sitemap()],
   vite: { plugins: [tailwindcss()] },
 });
