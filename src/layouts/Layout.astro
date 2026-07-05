@@ -27,6 +27,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
     <meta property="og:url" content={pageUrl} />
     <meta property="og:locale" content="en_IE" />
     <meta name="twitter:card" content="summary" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "WebApplication",
@@ -62,7 +63,7 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
 
     <script defer data-domain="takehomepay.ie" src="https://plausible.io/js/script.js"></script>
 
-    <!-- Google Analytics 4 — replace G-XXXXXXXXXX with real ID -->
+    <!-- TODO: Replace G-XXXXXXXXXX with your real GA4 Measurement ID from https://analytics.google.com -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];

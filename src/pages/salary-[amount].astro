@@ -76,6 +76,19 @@ const otherSalaries = salaries.filter((s) => s.slug !== salary.slug);
       </ol>
     </nav>
 
+    {/* Trust badge */}
+    <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500">
+      <span class="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 font-medium text-primary">
+        <svg class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+        </svg>
+        Updated for 2026
+      </span>
+      <span>
+        By <a href="/about/" class="font-medium text-gray-700 hover:text-primary">Mottalib Radif, MBA INSEAD</a>
+      </span>
+    </div>
+
     {/* Heading */}
     <div class="text-center max-w-3xl mx-auto">
       <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -171,6 +184,15 @@ const otherSalaries = salaries.filter((s) => s.slug !== salary.slug);
         </details>
       ))}
     </div>
+
+    {/* Sources */}
+    <section class="mt-12 pt-8 border-t border-gray-200">
+      <h3 class="text-sm font-semibold text-gray-700 mb-2">Sources</h3>
+      <ul class="text-xs text-gray-500 space-y-1">
+        <li><a href="https://www.revenue.ie" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">Revenue.ie</a> - Irish Tax and Customs, PAYE, USC &amp; PRSI rates</li>
+        <li><a href="https://www.gov.ie/en/publication/employment-law/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">Gov.ie</a> - Employment and workplace legislation</li>
+      </ul>
+    </section>
 
     {/* Cross-links: Other Salary Pages */}
     <div class="bg-white rounded-xl shadow-sm border border-border p-6">
