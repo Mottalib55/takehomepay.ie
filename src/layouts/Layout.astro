@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title: string;
   description: string;
@@ -72,9 +74,6 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
       gtag('config', 'G-XXXXXXXXXX');
     </script>
 
-    <style>
-      @import '../styles/global.css';
-    </style>
   </head>
   <body class="min-h-screen bg-surface text-gray-900 font-sans">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-blue-700 focus:rounded-lg focus:shadow-lg focus:ring-2 focus:ring-blue-500">Skip to content</a>
@@ -91,6 +90,8 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a href="/" class="text-gray-600 hover:text-primary transition-colors">Calculator</a>
           <a href="/guides/" class="text-gray-600 hover:text-primary transition-colors">Guides</a>
+          <a href="/average-salary-ireland/" class="text-gray-600 hover:text-primary transition-colors">Average Salary</a>
+          <a href="/minimum-wage-ireland/" class="text-gray-600 hover:text-primary transition-colors">Minimum Wage</a>
           <a href="/faq/" class="text-gray-600 hover:text-primary transition-colors">FAQ</a>
         </nav>
 
@@ -117,6 +118,8 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
         <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col gap-3 text-sm">
           <a href="/" class="text-gray-600 hover:text-primary transition-colors py-1">Calculator</a>
           <a href="/guides/" class="text-gray-600 hover:text-primary transition-colors py-1">Guides</a>
+          <a href="/average-salary-ireland/" class="text-gray-600 hover:text-primary transition-colors py-1">Average Salary</a>
+          <a href="/minimum-wage-ireland/" class="text-gray-600 hover:text-primary transition-colors py-1">Minimum Wage</a>
           <a href="/faq/" class="text-gray-600 hover:text-primary transition-colors py-1">FAQ</a>
           <a href="/legal/" class="text-gray-600 hover:text-primary transition-colors py-1">Legal Notice</a>
           <a href="/privacy/" class="text-gray-600 hover:text-primary transition-colors py-1">Privacy Policy</a>
@@ -134,6 +137,8 @@ const pageUrl = canonical ?? `${siteUrl}${Astro.url.pathname}`;
             <ul class="space-y-2">
               <li><a href="/" class="hover:text-primary">Salary Calculator</a></li>
               <li><a href="/guides/" class="hover:text-primary">Guides</a></li>
+              <li><a href="/average-salary-ireland/" class="hover:text-primary">Average Salary Ireland</a></li>
+              <li><a href="/minimum-wage-ireland/" class="hover:text-primary">Minimum Wage Ireland</a></li>
               <li><a href="/faq/" class="hover:text-primary">FAQ</a></li>
             </ul>
           </div>
